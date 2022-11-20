@@ -36,7 +36,7 @@ def defMatriz(palabra):
 
 def inicilizarAlfabeto():
     alfabeto = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
-                'v', 'w', 'x', 'y', 'z', ' ']
+                'v', 'w', 'x', 'y', 'z', '_']
     return alfabeto
 
 
@@ -80,11 +80,11 @@ def tamañoClave(palabra):
     clave = getWord("Ingrese la clave para cifrar el mensaje>>>")
     tamClave = len(clave)
     tamPalabra = len(palabra)
-    # if tamClave <= tamPalabra:
+   # if tamClave <= tamPalabra:
     return clave
-    # else:
-    #    print("La clave tiene que ser del mismo tamaño que la palabra a cifrar o más pequeña")
-    #    return tamañoClave(palabra)
+   # else:
+   #    print("La clave tiene que ser del mismo tamaño que la palabra a cifrar o más pequeña")
+   #    return tamañoClave(palabra)
 
 
 def comprobarClave(palabra, numeroPorFilas, alfabeto):
@@ -166,12 +166,12 @@ def cifradoHill():
 
     # proceso de clave
     matrizClave = comprobarClave(palabra, numeroPorFilas, alfabeto)
-    matrizClaveInversa = np.linalg.inv(matrizClave)
-    print(matrizClaveInversa)
+    # matrizClaveInversa = np.linalg.inv(matrizClave)
+    print(matrizClave)
     print("-----------------------------")
 
     # multiplicar matrices
-    matrizResultado = np.dot(matrizClaveInversa, trasMatrizMensaje)
+    matrizResultado = np.dot(matrizClave, trasMatrizMensaje)
     print(matrizResultado)
     print("-----------------------------")
 
@@ -195,6 +195,33 @@ def cifradoHill():
 
     print("mensaje cifrado: ", respuesta)
     print("mensaje cifrado: ", ' '.join(respuesta))
+
+
+    print("--------------------Descifrado-------------------------")
+    inversaClave = np.linalg.inv(matrizClave)
+    deterclave = int(np.linalg.det(matrizClave))
+    print(inversaClave)
+    print("---------------------------")
+    inversaClave = inversaClave % 27
+    print(inversaClave)
+    print("---------------------------")
+    resultadoTemp = np.dot(inversaClave, matrizResultado)
+    resultadoTemp = resultadoTemp % 27
+    print(resultadoTemp)
+    print("-----------------------------")
+    matrizEnInt1 = resultadoTemp.astype(int)
+    listaResultado1 = matrizEnInt1.flatten(order='F')
+    print(listaResultado1)
+    print("-----------------------------")
+    # obtener mensaje descifrado
+    respuesta1 = []
+    for elemento in listaResultado1:
+        letra = alfabeto[elemento]
+        if letra in alfabeto:
+            respuesta1.append(letra)
+
+    print("mensaje descifrado: ", respuesta1)
+    print("mensaje descifrado: ", ' '.join(respuesta1))
 
 
 cifradoHill()
