@@ -29,6 +29,7 @@ def getWord(mensaje):
     else:
         getWord(mensaje)
 
+
 def defMatriz(palabra):
     longitud = len(palabra)
     numero = getInt("Ingrese un número para crear la matriz (elementos por columna)>>>")
@@ -83,7 +84,7 @@ def completarMatrizClave(numeroPorFilas, posicionesClave, clave):
 def tamañoClave(palabra, numeroPorFilas):
     try:
         clave = getWord("Ingrese la clave para cifrar o descifrar el mensaje>>>")
-        tamanoMaximo = numeroPorFilas*numeroPorFilas
+        tamanoMaximo = numeroPorFilas * numeroPorFilas
         tamClave = 0
         tamClave = len(clave)
         if tamClave <= tamanoMaximo and tamClave > 0:
@@ -92,8 +93,9 @@ def tamañoClave(palabra, numeroPorFilas):
             print("La clave tiene que ser maximo de ", tamanoMaximo, " caracteres.")
             return tamañoClave(palabra, numeroPorFilas)
     except TypeError:
-            print("La clave tiene que ser maximo de ", tamanoMaximo, " caracteres, ingrese un valor valido.")
-            return tamañoClave(palabra, numeroPorFilas)
+        print("La clave tiene que ser maximo de ", tamanoMaximo, " caracteres, ingrese un valor valido.")
+        return tamañoClave(palabra, numeroPorFilas)
+
 
 def comprobarClave(palabra, numeroPorFilas, alfabeto):
     # Pedir clave para cifrar
@@ -137,7 +139,8 @@ def comprobarClave(palabra, numeroPorFilas, alfabeto):
         print("La clave ingresada es valida para cifrar")
         return trasMatrizClave
     else:
-        print("La clave ingresada no es valida para cifrar ya que determinante = 0 o tiene divisores en común, ingrese otra")
+        print(
+            "La clave ingresada no es valida para cifrar ya que determinante = 0 o tiene divisores en común, ingrese otra")
         return comprobarClave(palabra, numeroPorFilas, alfabeto)
 
 
@@ -236,7 +239,7 @@ def descifradoHill():
     matrizMensaje = [posicionesCompletas[numeroPorFilas * i: numeroPorFilas * (i + 1)] for i in range(columnas)]
     trasMatrizMensaje = np.transpose(matrizMensaje)
     print(trasMatrizMensaje)
-    print("-----------------------------")
+    print(" ")
 
     print("--------------------Descifrado-------------------------")
     inversaClave = Matrix(matrizClave).inv_mod(27)
@@ -266,5 +269,13 @@ def descifradoHill():
     print("mensaje descifrado: ", ' '.join(respuesta1))
 
 
-cifradoHill()
-descifradoHill()
+def start():
+    try:
+        cifradoHill()
+        descifradoHill()
+    except KeyboardInterrupt:
+        print("Buen intento :D")
+        return start()
+
+
+start()
