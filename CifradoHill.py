@@ -80,8 +80,7 @@ def cifradoHill():
     for i in range(columnas):
         matriz.append([])
         for j in range(numeroPorFilas):
-            for z in posiciones:
-                matriz[i].append(z)
+            matriz[i].append(posiciones[j])
 
     print(matriz)
 
