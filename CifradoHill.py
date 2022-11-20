@@ -83,16 +83,17 @@ def completarMatrizClave(numeroPorFilas, posicionesClave, clave):
 def tamañoClave(palabra, numeroPorFilas):
     try:
         clave = getWord("Ingrese la clave para cifrar o descifrar el mensaje>>>")
+        tamanoMaximo = numeroPorFilas*numeroPorFilas
+        tamClave = 0
         tamClave = len(clave)
-        tamañoMaximo = numeroPorFilas*numeroPorFilas
-        if tamClave <= tamañoMaximo and tamClave > 0:
+        if tamClave <= tamanoMaximo and tamClave > 0:
             return clave
         else:
-          print("La clave tiene que ser maximo de ", tamañoMaximo, " caracteres.")
-          return tamañoClave(palabra, numeroPorFilas)
-    except ValueError or TypeError:
-        print("La clave tiene que ser maximo de ", tamañoMaximo, " caracteres, ingrese un valor valido.")
-        return tamañoClave(palabra, numeroPorFilas)
+            print("La clave tiene que ser maximo de ", tamanoMaximo, " caracteres.")
+            return tamañoClave(palabra, numeroPorFilas)
+    except TypeError:
+            print("La clave tiene que ser maximo de ", tamanoMaximo, " caracteres, ingrese un valor valido.")
+            return tamañoClave(palabra, numeroPorFilas)
 
 def comprobarClave(palabra, numeroPorFilas, alfabeto):
     # Pedir clave para cifrar
@@ -243,7 +244,7 @@ def descifradoHill():
     deterclave = int(np.linalg.det(matrizClave))
     print(inversaClave)
     print("---------------------------")
-    inversaClave = inversaClave % 27
+    # inversaClave = inversaClave % 27
     print(inversaClave)
     print("---------------------------")
     resultadoTemp = np.dot(inversaClave, trasMatrizMensaje)
