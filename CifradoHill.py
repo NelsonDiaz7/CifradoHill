@@ -1,5 +1,5 @@
 import numpy as np
-
+from sympy import Matrix
 
 def getInt(mensaje):
     try:
@@ -196,16 +196,49 @@ def cifradoHill():
     print("mensaje cifrado: ", respuesta)
     print("mensaje cifrado: ", ' '.join(respuesta))
 
+def descifradoHill():
+    # Definir alfabeto (En este caso minisculas)
+    alfabeto = inicilizarAlfabeto()
+
+    # Palabra a cifrar
+    palabra = getWord("Ingrese la palabra que quiere descifrar>>>")
+    posiciones = []
+
+    # Guardar la posición de cada carácter de la palabra
+    for elemento in palabra:
+        if elemento in alfabeto:
+            posi = alfabeto.index(elemento)
+            posiciones.append(posi)
+
+    print("", posiciones)
+
+    # Definir una matriz que represente el mensaje | filas = numeroParaMatriz
+    numeroPorFilas = defMatriz(palabra)
+    # proceso de clave
+    matrizClave = comprobarClave(palabra, numeroPorFilas, alfabeto)
+
+    # calculo de columnas
+    columnas = calculoColumnas(numeroPorFilas, palabra)
+
+    # completando posiciones con espacios, para llenar la matriz
+    posicionesCompletas = completarMatriz(numeroPorFilas, columnas, posiciones, palabra)
+
+    # llenando matriz del mensaje
+    matrizMensaje = [posicionesCompletas[numeroPorFilas * i: numeroPorFilas * (i + 1)] for i in range(columnas)]
+    trasMatrizMensaje = np.transpose(matrizMensaje)
+    print(trasMatrizMensaje)
+    print("-----------------------------")
 
     print("--------------------Descifrado-------------------------")
-    inversaClave = np.linalg.inv(matrizClave)
+    inversaClave = Matrix(matrizClave).inv_mod(27)
+    print(inversaClave)
     deterclave = int(np.linalg.det(matrizClave))
     print(inversaClave)
     print("---------------------------")
     inversaClave = inversaClave % 27
     print(inversaClave)
     print("---------------------------")
-    resultadoTemp = np.dot(inversaClave, matrizResultado)
+    resultadoTemp = np.dot(inversaClave, trasMatrizMensaje)
     resultadoTemp = resultadoTemp % 27
     print(resultadoTemp)
     print("-----------------------------")
@@ -225,3 +258,4 @@ def cifradoHill():
 
 
 cifradoHill()
+descifradoHill()
