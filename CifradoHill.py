@@ -1,6 +1,7 @@
 import numpy as np
 from sympy import Matrix
 
+
 def getInt(mensaje):
     try:
         numero = (input(mensaje))
@@ -17,18 +18,21 @@ def getInt(mensaje):
 def getWord(mensaje):
     alfabeto = inicilizarAlfabeto()
     palabra = input(mensaje).lower()
-    for elemento in palabra:
-        if elemento not in alfabeto:
-            print("Ingrese solo letras validas en el alfabeto definido")
-            return getWord(mensaje)
+    tamPalabra = len(palabra)
+    if tamPalabra != 0:
+        for elemento in palabra:
+            if elemento not in alfabeto:
+                print("Ingrese solo letras validas en el alfabeto definido, si quieres usar un espacio utiliza '_' ")
+                return getWord(mensaje)
 
-    return palabra
-
+        return palabra
+    else:
+        getWord(mensaje)
 
 def defMatriz(palabra):
     longitud = len(palabra)
     numero = getInt("Ingrese un número para crear la matriz (elementos por columna)>>>")
-    if numero <= longitud:
+    if numero <= longitud and numero > 0:
         return numero
     else:
         return defMatriz(palabra)
@@ -76,20 +80,23 @@ def completarMatrizClave(numeroPorFilas, posicionesClave, clave):
         return posicionesClave
 
 
-def tamañoClave(palabra):
-    clave = getWord("Ingrese la clave para cifrar el mensaje>>>")
-    tamClave = len(clave)
-    tamPalabra = len(palabra)
-   # if tamClave <= tamPalabra:
-    return clave
-   # else:
-   #    print("La clave tiene que ser del mismo tamaño que la palabra a cifrar o más pequeña")
-   #    return tamañoClave(palabra)
-
+def tamañoClave(palabra, numeroPorFilas):
+    try:
+        clave = getWord("Ingrese la clave para cifrar o descifrar el mensaje>>>")
+        tamClave = len(clave)
+        tamañoMaximo = numeroPorFilas*numeroPorFilas
+        if tamClave <= tamañoMaximo and tamClave > 0:
+            return clave
+        else:
+          print("La clave tiene que ser maximo de ", tamañoMaximo, " caracteres.")
+          return tamañoClave(palabra, numeroPorFilas)
+    except ValueError or TypeError:
+        print("La clave tiene que ser maximo de ", tamañoMaximo, " caracteres, ingrese un valor valido.")
+        return tamañoClave(palabra, numeroPorFilas)
 
 def comprobarClave(palabra, numeroPorFilas, alfabeto):
     # Pedir clave para cifrar
-    clave = tamañoClave(palabra)
+    clave = tamañoClave(palabra, numeroPorFilas)
     posicionesClave = []
 
     # Guardar la posición de cada carácter de la clave
@@ -107,7 +114,7 @@ def comprobarClave(palabra, numeroPorFilas, alfabeto):
     trasMatrizClave = np.transpose(matrizClave)
     print(trasMatrizClave)
 
-    # Comprobar si la clave funciona para encriptar (Determinante != 0 and no tener divisores en común con el modulo[1,3,9,27])
+    # Comprobar si la clave funciona para encriptar (Determinante != 0 and no tener divisores en común con el modulo[3,9,27])
     determinanteClave = int(np.linalg.det(trasMatrizClave))
     print("Determinante: ", determinanteClave)
 
@@ -129,7 +136,7 @@ def comprobarClave(palabra, numeroPorFilas, alfabeto):
         print("La clave ingresada es valida para cifrar")
         return trasMatrizClave
     else:
-        print("La clave ingresada no es valida para cifrar, ingrese otra")
+        print("La clave ingresada no es valida para cifrar ya que determinante = 0 o tiene divisores en común, ingrese otra")
         return comprobarClave(palabra, numeroPorFilas, alfabeto)
 
 
@@ -195,6 +202,7 @@ def cifradoHill():
 
     print("mensaje cifrado: ", respuesta)
     print("mensaje cifrado: ", ' '.join(respuesta))
+
 
 def descifradoHill():
     # Definir alfabeto (En este caso minisculas)
