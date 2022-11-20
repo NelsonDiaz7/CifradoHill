@@ -67,10 +67,13 @@ def completarMatrizClave(numeroPorFilas, posicionesClave, clave):
     longitudClave = len(clave)
     totalCaracteres = numeroPorFilas * numeroPorFilas
     cantidadAñadir = totalCaracteres - longitudClave
-    for i in range(cantidadAñadir):
-        posicionesClave.append(26)
+    if cantidadAñadir > 0:
+        for i in range(cantidadAñadir):
+            posicionesClave.append(26)
 
-    return posicionesClave
+        return posicionesClave
+    else:
+        return posicionesClave
 
 
 def tamañoClave(palabra):
@@ -185,10 +188,10 @@ def cifradoHill():
 
     # obtener mensaje cifrado
     respuesta = []
-    for elemento in alfabeto:
-        index = alfabeto.index(elemento)
-        if index in listaResultado:
-            respuesta.append(alfabeto[index])
+    for elemento in listaResultado:
+        letra = alfabeto[elemento]
+        if letra in alfabeto:
+            respuesta.append(letra)
 
     print("mensaje cifrado: ", respuesta)
     print("mensaje cifrado: ", ' '.join(respuesta))
