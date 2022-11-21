@@ -122,7 +122,7 @@ def comprobarClave(palabra, numeroPorFilas, alfabeto):
         if determinanteClave % i == 0:
             divisores.append(i)
 
-    print("Divisores del determinante: ", divisores)
+    # print("Divisores del determinante: ", divisores)
     divisoresModulo = [3, 9, 27]
     for element in divisores:
         if element in divisoresModulo:
