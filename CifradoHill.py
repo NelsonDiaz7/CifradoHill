@@ -22,7 +22,7 @@ def getWord(mensaje):
     if tamPalabra != 0:
         for elemento in palabra:
             if elemento not in alfabeto:
-                print("Ingrese solo letras validas en el alfabeto definido, si quieres usar un espacio utiliza '_' ")
+                print("Ingrese solo letras válidas en el alfabeto definido, si quieres usar un espacio utiliza '_' ")
                 return getWord(mensaje)
 
         return palabra
@@ -112,11 +112,9 @@ def comprobarClave(palabra, numeroPorFilas, alfabeto):
     posicionesCompletaClave = completarMatrizClave(numeroPorFilas, posicionesClave, clave)
     matrizClave = [posicionesCompletaClave[numeroPorFilas * i: numeroPorFilas * (i + 1)] for i in range(numeroPorFilas)]
     trasMatrizClave = np.transpose(matrizClave)
-    # print(trasMatrizClave)
 
-    # Comprobar si la clave funciona para encriptar (Determinante != 0 and no tener divisores en común con el modulo[3,9,27])
+    # Comprobar si la clave funciona para encriptar (Determinante != 0 and no divisores en común con el modulo[3,9,27])
     determinanteClave = (np.linalg.det(trasMatrizClave)) // 1
-    # print("Determinante: ", determinanteClave)
 
     divisores = []
     numEsta = False
@@ -130,14 +128,12 @@ def comprobarClave(palabra, numeroPorFilas, alfabeto):
         if element in divisoresModulo:
             numEsta = True
 
-    #    print("¿Divisores en común?", numEsta)
-
     if determinanteClave != 0 and numEsta != True:
-        #        print("La clave ingresada es valida para cifrar")
+        # print("La clave ingresada es valida para cifrar")
         return trasMatrizClave
     else:
-        print(
-            "La clave ingresada no es valida para cifrar ya que determinante = 0 o tiene divisores en común, ingrese otra")
+        print("La clave ingresada no es valida para cifrar ya que determinante = 0 o tiene divisores en común, "
+              "ingrese otra")
         return comprobarClave(palabra, numeroPorFilas, alfabeto)
 
 
@@ -247,7 +243,6 @@ def descifradoHill():
 
 
 def start():
-
     try:
         menu = int(input("Menú principal: \n "
                          "1. Realizar cifrado y descifrado. \n "
