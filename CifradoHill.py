@@ -108,18 +108,15 @@ def comprobarClave(palabra, numeroPorFilas, alfabeto):
             posi = alfabeto.index(elemento)
             posicionesClave.append(posi)
 
-    print("", posicionesClave)
-    print(" ")
-
     # Llenando matriz de la clave
     posicionesCompletaClave = completarMatrizClave(numeroPorFilas, posicionesClave, clave)
     matrizClave = [posicionesCompletaClave[numeroPorFilas * i: numeroPorFilas * (i + 1)] for i in range(numeroPorFilas)]
     trasMatrizClave = np.transpose(matrizClave)
-    print(trasMatrizClave)
+    # print(trasMatrizClave)
 
     # Comprobar si la clave funciona para encriptar (Determinante != 0 and no tener divisores en común con el modulo[3,9,27])
-    determinanteClave = int(np.linalg.det(trasMatrizClave))
-    print("Determinante: ", determinanteClave)
+    determinanteClave = (np.linalg.det(trasMatrizClave)) // 1
+    # print("Determinante: ", determinanteClave)
 
     divisores = []
     numEsta = False
@@ -133,10 +130,10 @@ def comprobarClave(palabra, numeroPorFilas, alfabeto):
         if element in divisoresModulo:
             numEsta = True
 
-    print("¿El número está en los divisores?", numEsta)
+    #    print("¿Divisores en común?", numEsta)
 
     if determinanteClave != 0 and numEsta != True:
-        print("La clave ingresada es valida para cifrar")
+        #        print("La clave ingresada es valida para cifrar")
         return trasMatrizClave
     else:
         print(
@@ -145,6 +142,7 @@ def comprobarClave(palabra, numeroPorFilas, alfabeto):
 
 
 def cifradoHill():
+    print(">>>>>>>>>>>>>>>>>>>>>>Cifrado<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
     # Definir alfabeto (En este caso minisculas)
     alfabeto = inicilizarAlfabeto()
 
@@ -158,8 +156,6 @@ def cifradoHill():
             posi = alfabeto.index(elemento)
             posiciones.append(posi)
 
-    print("", posiciones)
-
     # Definir una matriz que represente el mensaje | filas = numeroParaMatriz
     numeroPorFilas = defMatriz(palabra)
 
@@ -172,30 +168,19 @@ def cifradoHill():
     # llenando matriz del mensaje
     matrizMensaje = [posicionesCompletas[numeroPorFilas * i: numeroPorFilas * (i + 1)] for i in range(columnas)]
     trasMatrizMensaje = np.transpose(matrizMensaje)
-    print(trasMatrizMensaje)
-    print("-----------------------------")
 
     # proceso de clave
     matrizClave = comprobarClave(palabra, numeroPorFilas, alfabeto)
-    # matrizClaveInversa = np.linalg.inv(matrizClave)
-    print(matrizClave)
-    print("-----------------------------")
 
     # multiplicar matrices
     matrizResultado = np.dot(matrizClave, trasMatrizMensaje)
-    print(matrizResultado)
-    print("-----------------------------")
 
     # aplicar modulo a la matriz resultado
     matrizResultado = matrizResultado % 27
-    print(matrizResultado)
-    print("-----------------------------")
 
     # convertir matriz a array
     matrizEnInt = matrizResultado.astype(int)
     listaResultado = matrizEnInt.flatten(order='F')
-    print(listaResultado)
-    print("-----------------------------")
 
     # obtener mensaje cifrado
     respuesta = []
@@ -204,11 +189,13 @@ def cifradoHill():
         if letra in alfabeto:
             respuesta.append(letra)
 
-    print("mensaje cifrado: ", respuesta)
-    print("mensaje cifrado: ", ' '.join(respuesta))
+    print("-----------------------------")
+    print("El mensaje cifrado es: ", ''.join(respuesta))
+    print("-----------------------------")
 
 
 def descifradoHill():
+    print(">>>>>>>>>>>>>>>>>>>>>>Descifrado<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
     # Definir alfabeto (En este caso minisculas)
     alfabeto = inicilizarAlfabeto()
 
@@ -222,10 +209,9 @@ def descifradoHill():
             posi = alfabeto.index(elemento)
             posiciones.append(posi)
 
-    print("", posiciones)
-
     # Definir una matriz que represente el mensaje | filas = numeroParaMatriz
     numeroPorFilas = defMatriz(palabra)
+
     # proceso de clave
     matrizClave = comprobarClave(palabra, numeroPorFilas, alfabeto)
 
@@ -238,26 +224,15 @@ def descifradoHill():
     # llenando matriz del mensaje
     matrizMensaje = [posicionesCompletas[numeroPorFilas * i: numeroPorFilas * (i + 1)] for i in range(columnas)]
     trasMatrizMensaje = np.transpose(matrizMensaje)
-    print(trasMatrizMensaje)
-    print(" ")
 
-    print("--------------------Descifrado-------------------------")
     inversaClave = Matrix(matrizClave).inv_mod(27)
-    print(inversaClave)
-    deterclave = int(np.linalg.det(matrizClave))
-    print(inversaClave)
-    print("---------------------------")
-    # inversaClave = inversaClave % 27
-    print(inversaClave)
-    print("---------------------------")
+
     resultadoTemp = np.dot(inversaClave, trasMatrizMensaje)
     resultadoTemp = resultadoTemp % 27
-    print(resultadoTemp)
-    print("-----------------------------")
+
     matrizEnInt1 = resultadoTemp.astype(int)
     listaResultado1 = matrizEnInt1.flatten(order='F')
-    print(listaResultado1)
-    print("-----------------------------")
+
     # obtener mensaje descifrado
     respuesta1 = []
     for elemento in listaResultado1:
@@ -265,16 +240,40 @@ def descifradoHill():
         if letra in alfabeto:
             respuesta1.append(letra)
 
-    print("mensaje descifrado: ", respuesta1)
-    print("mensaje descifrado: ", ' '.join(respuesta1))
+    #    print("mensaje descifrado: ", respuesta1)
+    print("-----------------------------")
+    print("El mensaje descifrado es: ", ''.join(respuesta1))
+    print("-----------------------------")
 
 
 def start():
+
     try:
-        cifradoHill()
-        descifradoHill()
-    except KeyboardInterrupt:
-        print("Buen intento :D")
+        menu = int(input("Menú principal: \n "
+                         "1. Realizar cifrado y descifrado. \n "
+                         "2. Realizar solo cifrado. \n "
+                         "3. Realizar solo descifrado \n "
+                         "4. Salir del programa \n "))
+
+        while menu != 4:
+
+            if menu == 1:
+                cifradoHill()
+                descifradoHill()
+            elif menu == 2:
+                cifradoHill()
+            elif menu == 3:
+                descifradoHill()
+            else:
+                print("Digita un número que sea valido")
+
+            menu = int(input("Menú principal: \n "
+                             "1. Realizar cifrado y descifrado. \n "
+                             "2. Realizar solo cifrado. \n "
+                             "3. Realizar solo descifrado \n "
+                             "4. Salir del programa \n "))
+    except ValueError or TypeError:
+        print("Ingrese valores validos por favor")
         return start()
 
 
