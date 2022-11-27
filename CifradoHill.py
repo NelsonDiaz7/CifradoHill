@@ -87,13 +87,13 @@ def tamañoClave(palabra, numeroPorFilas):
         tamanoMaximo = numeroPorFilas * numeroPorFilas
         tamClave = 0
         tamClave = len(clave)
-        if tamClave <= tamanoMaximo and tamClave > 0:
+        if tamClave == tamanoMaximo and tamClave > 0:
             return clave
         else:
-            print("La clave tiene que ser maximo de ", tamanoMaximo, " caracteres.")
+            print("La clave tiene que ser maximo de ", tamanoMaximo, " y mínimo de ", tamanoMaximo, " caracteres.")
             return tamañoClave(palabra, numeroPorFilas)
     except TypeError:
-        print("La clave tiene que ser maximo de ", tamanoMaximo, " caracteres, ingrese un valor valido.")
+        print("La clave tiene que ser máximo de ", tamanoMaximo, " y mínimo de ", tamanoMaximo," caracteres, ingrese un valor valido.")
         return tamañoClave(palabra, numeroPorFilas)
 
 
