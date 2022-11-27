@@ -15,7 +15,7 @@ def getInt(mensaje):
             print("Ingrese solo números")
             return getInt(mensaje)
     except ValueError or TypeError:
-        print("ingrese un valor númerico valido")
+        print("Ingrese un valor numérico válido")
         return getInt(mensaje)
 
 
@@ -79,11 +79,11 @@ def tamañoClave(palabra, numeroPorFilas):
         if tamClave == tamanoMaximo and tamClave > 0:
             return clave
         else:
-            print("La clave tiene que ser maximo de ", tamanoMaximo, " y mínimo de ", tamanoMaximo, " caracteres.")
+            print("La clave tiene que ser máximo de ", tamanoMaximo, " y mínimo de ", tamanoMaximo, " caracteres.")
             return tamañoClave(palabra, numeroPorFilas)
     except TypeError:
         print("La clave tiene que ser máximo de ", tamanoMaximo, " y mínimo de ", tamanoMaximo,
-              " caracteres, ingrese un valor valido.")
+              " caracteres, ingrese un valor válido.")
         return tamañoClave(palabra, numeroPorFilas)
 
 
@@ -132,7 +132,7 @@ def comprobarClave(palabra, numeroPorFilas, alfabeto):
     if determinanteClave != 0 and numEsta != True:
         return trasMatrizClave
     else:
-        print("La clave ingresada no es valida para cifrar ya que determinante = 0 o tiene divisores en común, "
+        print("La clave ingresada no es válida para cifrar, ya que determinante = 0 o tiene divisores en común, "
               "ingrese otra")
         return comprobarClave(palabra, numeroPorFilas, alfabeto)
 
@@ -161,7 +161,7 @@ def cifradoHill():
                 posi = alfabeto.index(elemento)
                 posiciones.append(posi)
     else:
-        print("Tiene que ingresar algúna palabra para cifrar")
+        print("Tiene que ingresar alguna palabra para cifrar")
         return cifradoHill()
 
     # Definir una matriz que represente el mensaje | filas = numeroParaMatriz
@@ -193,7 +193,7 @@ def cifradoHill():
 
     # multiplicar matrices
     matrizResultado = np.dot(matrizClave, trasMatrizMensaje)
-    print("------ Matriz resultado de la multiplicacion del mensaje con la clave ------")
+    print("------ Matriz resultado de la multiplicación del mensaje con la clave ------")
     print(matrizResultado)
     print("----------------------------------------------------------------------------")
 
@@ -206,7 +206,7 @@ def cifradoHill():
     # convertir matriz a array
     matrizEnInt = matrizResultado.astype(int)
     listaResultado = matrizEnInt.flatten(order='F')
-    print("----------------- Mensaje cifrado y codificado en numeros ------------------")
+    print("----------------- Mensaje cifrado y codificado en números ------------------")
     print(listaResultado)
     print("----------------------------------------------------------------------------")
 
@@ -235,7 +235,7 @@ def descifradoHill():
                 posi = alfabeto.index(elemento)
                 posiciones.append(posi)
     else:
-        print("Tiene que ingresar algúna palabra para descifrar")
+        print("Tiene que ingresar alguna palabra para descifrar")
         return descifradoHill()
 
     # Definir una matriz que represente el mensaje | filas = numeroParaMatriz
@@ -249,7 +249,7 @@ def descifradoHill():
 
     # proceso de clave
     matrizClave = comprobarClave(palabra, numeroPorFilas, alfabeto)
-    print("--------------------- Criptotexto codificado a numeros ---------------------")
+    print("--------------------- Criptotexto codificado a números ---------------------")
     print(posicionesCompletas)
     print("----------------------------------------------------------------------------")
     print("----------------------- Matriz resultante de la clave ----------------------")
@@ -269,7 +269,7 @@ def descifradoHill():
     print("----------------------------------------------------------------------------")
 
     resultadoTemp = np.dot(inversaClave, trasMatrizMensaje)
-    print("---- Matriz resultado de la multiplicacion del criptotexto con la clave ----")
+    print("---- Matriz resultado de la multiplicación del criptotexto con la clave ----")
     print(resultadoTemp)
     print("----------------------------------------------------------------------------")
     resultadoTemp = resultadoTemp % len(alfabeto)
@@ -279,7 +279,7 @@ def descifradoHill():
 
     matrizEnInt1 = resultadoTemp.astype(int)
     listaResultado1 = matrizEnInt1.flatten(order='F')
-    print("---------------- Mensaje descifrado y codificado en numeros ----------------")
+    print("---------------- Mensaje descifrado y codificado en números ----------------")
     print(listaResultado1)
     print("----------------------------------------------------------------------------")
 
@@ -301,8 +301,8 @@ def start():
         menu = int(input("Menú principal: \n "
                          "1. Realizar cifrado y descifrado. \n "
                          "2. Realizar solo cifrado. \n "
-                         "3. Realizar solo descifrado \n "
-                         "4. Salir del programa \n "))
+                         "3. Realizar solo descifrado. \n "
+                         "4. Salir del programa. \n "))
 
         while menu != 4:
 
@@ -322,7 +322,7 @@ def start():
                              "3. Realizar solo descifrado. \n "
                              "4. Salir del programa. \n "))
     except ValueError or TypeError as ve:
-        print("Ingrese valores validos, por favor", ve)
+        print("Ingrese valores válidos, por favor", ve)
         return start()
 
 
