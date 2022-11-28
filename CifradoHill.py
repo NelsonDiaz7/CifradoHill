@@ -314,7 +314,7 @@ def start():
             elif menu == 3:
                 descifradoHill()
             else:
-                print("Digita un número que sea valido")
+                print("Digita un número que sea válido")
 
             menu = int(input("Menú principal: \n "
                              "1. Realizar cifrado y descifrado. \n "
